@@ -32,10 +32,12 @@ def on_image_click(event, chosen_image, other_image):
 
 
 def next_pair():
-    global pair_index, image_pairs, left_image_label, right_image_label
+    global pair_index, image_pairs, left_image_label, right_image_label, is_last_folder
     pair_index += 1
     if pair_index >= len(image_pairs):
-        var.set(1)
+        var.set(1)  # Signal that the current folder processing is done
+        if is_last_folder:
+            root.destroy()  # Close the application if it's the last folder
     else:
         left_photo, left_path = image_pairs[pair_index][0]
         right_photo, right_path = image_pairs[pair_index][1]
@@ -62,8 +64,9 @@ def set_ground_image(ground_image_path):
     ground_image_label.image = ground_photo  # Keep a reference
 
 
-def process_folder(folder_path):
-    global pair_index, image_pairs, choice_matrix
+def process_folder(folder_path, is_last):
+    global pair_index, image_pairs, choice_matrix, is_last_folder
+    is_last_folder = is_last
 
     ground_image_path = find_ground_truth_image(folder_path)
     if ground_image_path:
@@ -113,7 +116,9 @@ right_image_label.pack(side="right")
 
 var = tk.IntVar()
 
-for folder in subfolders:
-    process_folder(folder)
+is_last_folder = False
+for index, folder in enumerate(subfolders):
+    is_last = (index == len(subfolders) - 1)
+    process_folder(folder, is_last)
 
 root.mainloop()
