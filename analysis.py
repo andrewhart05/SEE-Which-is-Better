@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pylab as plt
 
+image = "Waterbottle"
 
 def calculate_expected_probability(rating_i, rating_j):
     return 1 / (1 + 10 ** ((rating_j - rating_i) / 400))
-
 
 def update_ratings(ratings, results, K):
     n = results.shape[0]  # Number of opponents based on the results matrix size
@@ -27,10 +27,11 @@ def read_and_prepare_matrix(file_path):
     return objects, data_matrix
 
 files = [
-    "Results/Dirk_a_walk_in_the_park_choices_matrix.csv",
-    "Results/Maryam_a_walk_in_the_park_choices_matrix.csv",
-    "Results/Nathan_a_walk_in_the_park_choices_matrix.csv",
-    "Results/Doruk_a_walk_in_the_park_choices_matrix.csv"
+    f"Results/Dirk_{image}_choices_matrix.csv",
+    f"Results/Maryam_{image}_choices_matrix.csv",
+    f"Results/Nathan_{image}_choices_matrix.csv",
+    f"Results/Doruk_{image}_choices_matrix.csv",
+    f"Results/Andrew_{image}_choices_matrix.csv"
 ]
 
 K = 32
@@ -115,5 +116,5 @@ plt.show()
 distance_df = pd.DataFrame(distance_matrix, index=objects_list, columns=objects_list)
 
 # Output the DataFrame to a CSV file
-csv_file_path = 'a_walk_in_the_park_distance_matrix.csv'
+csv_file_path = f'{image}_distance_matrix.csv'
 distance_df.to_csv(csv_file_path)
