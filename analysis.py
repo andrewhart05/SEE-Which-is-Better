@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pylab as plt
 
-image = "Waterbottle"
+# image = "Waterbottle"
 
 def calculate_expected_probability(rating_i, rating_j):
     return 1 / (1 + 10 ** ((rating_j - rating_i) / 400))
@@ -26,95 +26,95 @@ def read_and_prepare_matrix(file_path):
     data_matrix = df.values  # Use values directly for the numpy array
     return objects, data_matrix
 
-files = [
-    f"Results/Dirk_{image}_choices_matrix.csv",
-    f"Results/Maryam_{image}_choices_matrix.csv",
-    f"Results/Nathan_{image}_choices_matrix.csv",
-    f"Results/Doruk_{image}_choices_matrix.csv",
-    f"Results/Andrew_{image}_choices_matrix.csv"
-]
+# files = [
+#     f"Results/Dirk_{image}_choices_matrix.csv",
+#     f"Results/Maryam_{image}_choices_matrix.csv",
+#     f"Results/Nathan_{image}_choices_matrix.csv",
+#     f"Results/Doruk_{image}_choices_matrix.csv",
+#     f"Results/Andrew_{image}_choices_matrix.csv"
+# ]
 
-K = 32
-initial_ratings = {}  # Initialize an empty dictionary for ratings
+# K = 32
+# initial_ratings = {}  # Initialize an empty dictionary for ratings
 
-for file in files:
-    objects, results_matrix = read_and_prepare_matrix(file)
-    # Initialize or update ratings for objects
-    for obj in objects:
-        if obj not in initial_ratings:
-            initial_ratings[obj] = 0.0  # Start with a base rating for new objects
+# for file in files:
+#     objects, results_matrix = read_and_prepare_matrix(file)
+#     # Initialize or update ratings for objects
+#     for obj in objects:
+#         if obj not in initial_ratings:
+#             initial_ratings[obj] = 0.0  # Start with a base rating for new objects
 
-    # Prepare the ratings list in the order of objects for this file
-    ratings_list = np.array([initial_ratings[obj] for obj in objects])
+#     # Prepare the ratings list in the order of objects for this file
+#     ratings_list = np.array([initial_ratings[obj] for obj in objects])
 
-    # Update ratings based on this file's results
-    updated_ratings = update_ratings(ratings_list, results_matrix, K)
+#     # Update ratings based on this file's results
+#     updated_ratings = update_ratings(ratings_list, results_matrix, K)
 
-    # Update the global ratings dictionary
-    for i, obj in enumerate(objects):
-        initial_ratings[obj] = updated_ratings[i]
+#     # Update the global ratings dictionary
+#     for i, obj in enumerate(objects):
+#         initial_ratings[obj] = updated_ratings[i]
 
-# Convert ratings to a sorted list for visualization and analysis
-sorted_ratings = sorted(initial_ratings.items(), key=lambda x: x[1], reverse=True)
+# # Convert ratings to a sorted list for visualization and analysis
+# sorted_ratings = sorted(initial_ratings.items(), key=lambda x: x[1], reverse=True)
 
-# Plotting the final ratings
-plt.figure(figsize=(12, 8))
-objects, ratings = zip(*sorted_ratings)
-plt.bar(objects, ratings)
-plt.xticks(rotation=90)
-plt.title("ELO Ratings of Opponents")
-plt.ylabel("ELO Rating")
-plt.show()
+# # Plotting the final ratings
+# plt.figure(figsize=(12, 8))
+# objects, ratings = zip(*sorted_ratings)
+# plt.bar(objects, ratings)
+# plt.xticks(rotation=90)
+# plt.title("ELO Ratings of Opponents")
+# plt.ylabel("ELO Rating")
+# plt.show()
 
-# Print the ELO scores
-print("ELO Scores before normalization:")
-for obj, rating in sorted_ratings:
-    print(f"{obj}: {rating}")
+# # Print the ELO scores
+# print("ELO Scores before normalization:")
+# for obj, rating in sorted_ratings:
+#     print(f"{obj}: {rating}")
 
-# Normalize the scores
-ratings_only = [rating for _, rating in sorted_ratings]
-min_rating = min(ratings_only)
-max_rating = max(ratings_only)
-normalized_scores = [(obj, (rating - min_rating) / (max_rating - min_rating)) for obj, rating in sorted_ratings]
+# # Normalize the scores
+# ratings_only = [rating for _, rating in sorted_ratings]
+# min_rating = min(ratings_only)
+# max_rating = max(ratings_only)
+# normalized_scores = [(obj, (rating - min_rating) / (max_rating - min_rating)) for obj, rating in sorted_ratings]
 
-# Print the normalized scores
-print("\nNormalized ELO Scores (0 to 1 scale):")
-for obj, normalized_score in normalized_scores:
-    print(f"{obj}: {normalized_score:.3f}")
+# # Print the normalized scores
+# print("\nNormalized ELO Scores (0 to 1 scale):")
+# for obj, normalized_score in normalized_scores:
+#     print(f"{obj}: {normalized_score:.3f}")
 
-# Assuming normalized_scores is a list of tuples (object, normalized_score)
-normalized_scores_dict = dict(normalized_scores)
+# # Assuming normalized_scores is a list of tuples (object, normalized_score)
+# normalized_scores_dict = dict(normalized_scores)
 
-# Create a list of objects to maintain order
-objects_list = [obj for obj, _ in normalized_scores]
+# # Create a list of objects to maintain order
+# objects_list = [obj for obj, _ in normalized_scores]
 
-# Initialize an empty matrix
-n = len(normalized_scores)
-distance_matrix = np.zeros((n, n))
+# # Initialize an empty matrix
+# n = len(normalized_scores)
+# distance_matrix = np.zeros((n, n))
 
-# Populate the distance matrix
-for i in range(n):
-    for j in range(n):
-        distance_matrix[i, j] = normalized_scores_dict[objects_list[i]] - normalized_scores_dict[objects_list[j]]
+# # Populate the distance matrix
+# for i in range(n):
+#     for j in range(n):
+#         distance_matrix[i, j] = normalized_scores_dict[objects_list[i]] - normalized_scores_dict[objects_list[j]]
 
-# Display the distance matrix
-print("\nDistance Matrix:")
-print(distance_matrix)
+# # Display the distance matrix
+# print("\nDistance Matrix:")
+# print(distance_matrix)
 
-# Plotting the normalized ELO scores
-plt.figure(figsize=(12, 8))
-objects, normalized_ratings = zip(*normalized_scores)  # Unpack the objects and their normalized scores
-plt.bar(objects, normalized_ratings, color='skyblue')
-plt.xticks(rotation=90)
-plt.title("Normalized ELO Scores")
-plt.ylabel("Normalized Score")
-plt.xlabel("Objects")
-plt.tight_layout()  # Adjust layout to make room for the rotated x-axis labels
-plt.show()
+# # Plotting the normalized ELO scores
+# plt.figure(figsize=(12, 8))
+# objects, normalized_ratings = zip(*normalized_scores)  # Unpack the objects and their normalized scores
+# plt.bar(objects, normalized_ratings, color='skyblue')
+# plt.xticks(rotation=90)
+# plt.title("Normalized ELO Scores")
+# plt.ylabel("Normalized Score")
+# plt.xlabel("Objects")
+# plt.tight_layout()  # Adjust layout to make room for the rotated x-axis labels
+# plt.show()
 
-# Convert the distance matrix to a DataFrame
-distance_df = pd.DataFrame(distance_matrix, index=objects_list, columns=objects_list)
+# # Convert the distance matrix to a DataFrame
+# distance_df = pd.DataFrame(distance_matrix, index=objects_list, columns=objects_list)
 
-# Output the DataFrame to a CSV file
-csv_file_path = f'{image}_distance_matrix.csv'
-distance_df.to_csv(csv_file_path)
+# # Output the DataFrame to a CSV file
+# csv_file_path = f'{image}_distance_matrix.csv'
+# distance_df.to_csv(csv_file_path)
