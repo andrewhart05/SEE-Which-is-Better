@@ -52,8 +52,6 @@ def plot_regression(independent_csv, dependent_csvs, labels):
     df_independent = pd.read_csv(independent_csv, index_col=0)
     independent_flat = df_independent.values.flatten()
 
-    plt.figure(figsize=(10, 7))
-
     for i, (dependent_csv, label) in enumerate(zip(dependent_csvs, labels)):
         df_dependent = pd.read_csv(dependent_csv, index_col=0)
         dependent_flat = df_dependent.values.flatten()
@@ -63,20 +61,21 @@ def plot_regression(independent_csv, dependent_csvs, labels):
         x_pred = np.linspace(independent_flat.min(), independent_flat.max(), 50)
         y_pred = model.params[0] + model.params[1] * x_pred
 
+        # Create a new figure for each plot
+        plt.figure(figsize=(10, 7))
         plt.scatter(independent_flat, dependent_flat, label=f'{label}')
-        plt.plot(x_pred, y_pred, lw=2)
+        plt.plot(x_pred, y_pred, 'r', lw=2)  # 'r' for red line
 
         # Equation and R^2 for annotation
         eq_text = f'{label}: y = {model.params[1]:.4f}x + {model.params[0]:.4f}\n$R^2$ = {model.rsquared:.2f}'
 
         # Place text on the plot
-        plt.text(0.05, 0.95 - i * 0.06, eq_text, transform=plt.gca().transAxes, fontsize=9, verticalalignment='top')
+        plt.text(0.05, 0.95, eq_text, transform=plt.gca().transAxes, fontsize=9, verticalalignment='top')
 
-    plt.xlabel('Elo Distance')
-    plt.ylabel('Fitness Function Distances')
-    plt.title('Linear Regression - Mushrooms')
-    plt.legend()
-    plt.show()
+        plt.xlabel('Elo Distance')
+        plt.ylabel('Fitness Function Distance')
+        plt.title(f'Linear Regression for {label}')
+        plt.show()
 
 
 def perform_regression_significance_test(independent_csv, dependent_csvs, labels):
@@ -105,13 +104,13 @@ def perform_regression_significance_test(independent_csv, dependent_csvs, labels
         print(f"---")
 
 
-# # Example, performing analysis on Waterbottle. Replace with desired image set.
-# independent_csv = 'Analysis/Waterbottle_Elo_abs_distance_matrix.csv'
-# dependent_csvs = ['Analysis/Waterbottle_FF_ML2DHD_V2_distance_matrix.csv', 'Analysis/Waterbottle_FF_Gamma_distance_matrix.csv', 'Analysis/Waterbottle_FF_Hamming_distance_matrix.csv',
-#                   'Analysis/Waterbottle_FF_ML2DHD_distance_matrix.csv']
-# labels = ['FF_ML2DHD_V2', 'FF_Gamma', 'FF_Hamming', 'FF_ML2DHD']
+# Example usage parameters (make sure to replace these with actual file paths)
+independent_csv = 'Analysis/a_walk_in_the_park_Elo_abs_distance_matrix.csv'
+dependent_csvs = ['Analysis/a_walk_in_the_park_FF_ML2DHD_V2_distance_matrix.csv', 'Analysis/a_walk_in_the_park_FF_Gamma_distance_matrix.csv', 'Analysis/a_walk_in_the_park_FF_Hamming_distance_matrix.csv',
+                  'Analysis/a_walk_in_the_park_FF_ML2DHD_distance_matrix.csv']
+labels = ['FF_ML2DHD_V2', 'FF_Gamma', 'FF_Hamming', 'FF_ML2DHD']  # Example function names or labels
 
-# plot_regression(independent_csv, dependent_csvs, labels)
-# perform_regression_significance_test(independent_csv, dependent_csvs, labels)
+#plot_regression(independent_csv, dependent_csvs, labels)
+plot_regression(independent_csv, dependent_csvs, labels)
 
 
