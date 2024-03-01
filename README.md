@@ -11,16 +11,13 @@ This analysis requires the statsmodels python library. Install using the followi
 
 ## Files
 
-The file 'analysis.py' is the code for generating Elo scores and the Elo distance matrices, run using Analysis.ipynb.
+The file 'EloAnalysis.py' is the code for generating Elo scores and the Elo distance matrices.
 
-The file 'Correlation.py' is the code for generating the corresponding distance matrices for the fitness functions and performing a linear regression between those and the Elo distances, and the folder 'Analysis' contains all of the distance matrices as well as the scatterplots.
+The file 'Correlation.py' is the code for generating the corresponding distance matrices for the fitness functions and performing a linear regression between those and the Elo distances.
 
-main.py
+The file 'ExperimentGUI.py' is the GUI for the Which Is Better Experiment, in which participants are shown pairs of ground truths and prompted to select the one closer to the original image. Matrices reflecting the choices are saved as CSV files when run.
 
-Analyze_Results.ipynb
+The notebook 'Analysis.ipynb' takes the data from the experiment and analyzes it by performing a linear regression with data from the fitness functions. The Elo distance matrices and the fitness function distance matrices will be saved into the chosen image's designated folder in the 'images' directory as they are generated.
 
-Analysis.ipynb
-
-Correlation.ipynb
 
 
