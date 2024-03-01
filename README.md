@@ -11,6 +11,8 @@ This analysis requires the statsmodels python library. Install using the followi
 
 ## Files
 
+The file 'Fitness.py' contains all of the fitness functions.
+
 The file 'EloAnalysis.py' is the code for generating Elo scores and the Elo distance matrices.
 
 The file 'Correlation.py' is the code for generating the corresponding distance matrices for the fitness functions and performing a linear regression between those and the Elo distances.
