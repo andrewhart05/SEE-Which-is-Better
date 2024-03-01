@@ -104,13 +104,5 @@ def perform_regression_significance_test(independent_csv, dependent_csvs, labels
         print(f"---")
 
 
-# Example usage parameters (make sure to replace these with actual file paths)
-independent_csv = 'Analysis/a_walk_in_the_park_Elo_abs_distance_matrix.csv'
-dependent_csvs = ['Analysis/a_walk_in_the_park_FF_ML2DHD_V2_distance_matrix.csv', 'Analysis/a_walk_in_the_park_FF_Gamma_distance_matrix.csv', 'Analysis/a_walk_in_the_park_FF_Hamming_distance_matrix.csv',
-                  'Analysis/a_walk_in_the_park_FF_ML2DHD_distance_matrix.csv']
-labels = ['FF_ML2DHD_V2', 'FF_Gamma', 'FF_Hamming', 'FF_ML2DHD']  # Example function names or labels
-
-#plot_regression(independent_csv, dependent_csvs, labels)
-plot_regression(independent_csv, dependent_csvs, labels)
 
 
